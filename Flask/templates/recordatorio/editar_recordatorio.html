@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <form action="{{ url_for('recordatorios.update', id=recordatorio.ID_R) }}" method="POST">
+                <h4 class="mb-3">Actualizar Recordatorio</h4>
+                <div class="form-group mb-3">
+                    <label for="ID_C">Cita</label>
+                    <select name="ID_C" class="form-control" required>
+                        {% for cita in citas %}
+                            <option value="{{ cita.ID_C }}" {% if cita.ID_C == recordatorio.ID_C %} selected {% endif %}>
+                                {{ cita.Motivo }} - {{ cita.FechaHora.strftime('%Y-%m-%dT%H:%M') }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="TipoRecordatorio">Tipo de Recordatorio</label>
+                    <input type="text" name="TipoRecordatorio" class="form-control" placeholder="Tipo de Recordatorio" value="{{ recordatorio.TipoRecordatorio }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="FechaHoraEnvío">Fecha y Hora de Envío</label>
+                    <input type="datetime-local" name="FechaHoraEnvío" class="form-control" value="{{ recordatorio.FechaHoraEnvío.strftime('%Y-%m-%dT%H:%M') }}" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Estado">Estado</label>
+                    <input type="text" name="Estado" class="form-control" placeholder="Estado" value="{{ recordatorio.Estado }}" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

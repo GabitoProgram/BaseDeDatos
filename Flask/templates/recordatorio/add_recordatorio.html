@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row justify-content-center">
+    <div class="col-md-4">
+        <div class="card card-body">
+            <form action="{{ url_for('recordatorios.new') }}" method="POST">
+                <h4 class="mb-3">Nuevo Recordatorio</h4>
+                <div class="form-group mb-2">
+                    <label for="ID_C">Cita</label>
+                    <select name="ID_C" class="form-control" required>
+                        {% for cita in citas %}
+                            <option value="{{ cita.ID_C }}">{{ cita.Motivo }} - {{ cita.FechaHora }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="TipoRecordatorio">Tipo de Recordatorio</label>
+                    <input type="text" name="TipoRecordatorio" class="form-control" placeholder="Tipo de Recordatorio" required>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="FechaHoraEnvío">Fecha y Hora de Envío</label>
+                    <input type="datetime-local" name="FechaHoraEnvío" class="form-control" required>
+                </div>
+                
+                <div class="form-group mb-2">
+                    <label for="Estado">Estado</label>
+                    <input type="text" name="Estado" class="form-control" placeholder="Estado" required>
+                </div>
+                <div class="form-group mb-2">
+                    <button type="submit" class="btn btn-primary btn-block">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

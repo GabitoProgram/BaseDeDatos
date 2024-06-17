@@ -1,0 +1,30 @@
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+    </div>
+
+    <div class="col-md-12">
+        <h4>Detalle de la Citasss</h4>
+        <p>Paciente: {{ paciente.Nombre }}</p>
+        <p>Doctor: {{ doctor.Nombre }}</p>
+        <p>Especialidad: {{ doctor.Especialidad }}</p>
+        <p>Fecha y Hora: {{ cita.FechaHora }}</p>
+        <p>Motivo: {{ cita.Motivo }}</p>
+        
+        <!-- Botón para imprimir la cita -->
+        <a href="{{ url_for('email_bp.imprimir_cita', id_cita=cita.ID_C) }}" target="_blank" class="btn btn-primary">Imprimir Cita</a>
+    </div>
+</div>
+{% endblock %}

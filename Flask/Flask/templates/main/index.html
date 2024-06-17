@@ -1,0 +1,101 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-12">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+        {% endwith %}
+        
+        <div class="container">
+            <span class="mi-estilo">Pacientes</span>
+            <a href="{{ url_for('pacientes.show_add_form') }}" class="btn mb-3" style="background-color: #28a745; color: white; float: right; font-size: 0.85rem;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-plus">
+                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/>
+                <path d="M16 19h6"/>
+                <path d="M19 16v6"/>
+                <path d="M6 21v-2a4 4 0 0 1 4 -4h4"/>
+              </svg>
+              Nuevo Paciente
+            </a>
+          </div>
+          
+          
+          
+    </div>
+
+    <div class="col-md-12">
+        <table class="table table-striped table-border bg-white table-sm" style="width: 100%; margin-top: 30px;">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Teléfono</th>
+                    <th scope="col">Fecha de Nacimiento</th>
+                    <th scope="col">Género</th>
+                    <th scope="col">Dirección</th>
+                    <th scope="col">Operaciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for paciente in pacientes %}
+                <tr>
+                    <td>{{ paciente.Nombre }}</td>
+                    <td>{{ paciente.Email }}</td>
+                    <td>{{ paciente.Teléfono }}</td>
+                    <td>{{ paciente.FechaNacimiento }}</td>
+                    <td>{{ paciente.Género }}</td>
+                    <td>{{ paciente.Dirección }}</td>
+                    <td>
+                        <a href="{{ url_for('pacientes.update', id=paciente.ID_P) }}" class="btn btn-success btn-sm rounded-pill me-1" style="background-color: #007bff; border: none;" onclick="return confirm('¿Estás seguro de que deseas editar esta cita?')">
+                            <svg  xmlns="http://www.w3.org/2000/svg"  width="19"  height="19"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-user-edit"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" /><path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" /><path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z" /></svg>
+                        </a>
+                        
+                        
+                        <a href="{{ url_for('pacientes.delete', id=paciente.ID_P) }}" class="btn btn-warning btn-sm rounded-pill me-1" style="background-color: #dc3545; border: none;" onclick="return confirm('¿Estás seguro de que deseas eliminar esta cita?')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-x">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+                                <path d="M22 22l-5 -5" />
+                                <path d="M17 22l5 -5" />
+                            </svg>
+                        </a>
+                        
+                    </td>
+                    <!--
+                    <td>
+                        <a href="{{ url_for('pacientes.update', id=paciente.ID_P) }}" class="btn btn-success btn-sm" onclick="return confirmarEdicion(event, '{{ url_for('pacientes.update', id=paciente.ID_P) }}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icon-tabler-user-edit">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+                                <path d="M18.42 15.61a2.1 2.1 0 0 1 2.97 2.97l-3.39 3.42h-3v-3l3.42 -3.39z" />
+                            </svg>
+                        </a> 
+                        <a href="{{ url_for('pacientes.delete', id=paciente.ID_P) }}" class="btn btn-warning btn-sm" onclick="return confirmarEliminacion(event, '{{ url_for('pacientes.delete', id=paciente.ID_P) }}')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-user-x">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0" />
+                                <path d="M6 21v-2a4 4 0 0 1 4 -4h3.5" />
+                                <path d="M22 22l-5 -5" />
+                                <path d="M17 22l5 -5" />
+                            </svg>
+                        </a>
+                    </td> !-->
+                
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
